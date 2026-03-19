@@ -1,3 +1,3 @@
 Documentação
 
-Arquivos de documentação do projeto de banco de dados.
+Documentação técnica do projeto de banco de dados.
