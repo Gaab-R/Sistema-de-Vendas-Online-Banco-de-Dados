@@ -149,7 +149,7 @@ erDiagram
     PEDIDOS ||--|| ENTREGA : possui
 
     ENDERECO ||--o{ ENTREGA : destino
-
+```
 ---
 
 ## 🔧 Funcionalidades implementadas
