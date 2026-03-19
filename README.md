@@ -63,6 +63,95 @@ O banco segue normalização até a *3ª Forma Normal (3FN)*, garantindo:
 
 ---
 
+## 📊 Diagrama Entidade-Relacionamento (DER)
+
+```mermaid
+erDiagram
+
+    CLIENTES {
+        INT id_cliente PK
+        VARCHAR nome_completo
+        DATE data_nascimento
+        VARCHAR email
+        VARCHAR codigo_acesso
+        VARCHAR telefone
+        VARCHAR cpf
+        DATETIME data_cadastro
+        INT id_endereco FK
+    }
+
+    ENDERECO {
+        INT id_endereco PK
+        VARCHAR logradouro
+        VARCHAR bairro
+        VARCHAR numero
+        VARCHAR cidade
+        VARCHAR estado
+        VARCHAR cep
+        VARCHAR pais
+    }
+
+    CATEGORIAS {
+        INT id_categoria PK
+        VARCHAR nome_categoria
+    }
+
+    PRODUTOS {
+        INT id_produto PK
+        VARCHAR nome_produto
+        DECIMAL valor_produto
+        INT estoque
+        INT id_categoria FK
+    }
+
+    PEDIDOS {
+        INT id_pedido PK
+        VARCHAR status_pedido
+        DATETIME data_pedido
+        INT id_cliente FK
+    }
+
+    ITENSPEDIDOS {
+        INT id_item PK
+        INT id_pedido FK
+        INT id_produto FK
+        INT quantidade
+        DECIMAL preco_unitario
+    }
+
+    PAGAMENTO {
+        INT id_pagamento PK
+        INT id_pedido FK
+        DATE data_pagamento
+        DECIMAL valor_pagamento
+        VARCHAR tipo_pagamento
+        VARCHAR status_pagamento
+    }
+
+    ENTREGA {
+        INT id_entrega PK
+        INT id_pedido FK
+        INT id_endereco FK
+        VARCHAR status_entrega
+        DATE data_envio
+        DATE data_entrega
+    }
+
+    CLIENTES ||--o{ PEDIDOS : realiza
+    CLIENTES }o--|| ENDERECO : possui
+
+    PRODUTOS }o--|| CATEGORIAS : pertence
+
+    PEDIDOS ||--o{ ITENSPEDIDOS : contem
+    PRODUTOS ||--o{ ITENSPEDIDOS : compoe
+
+    PEDIDOS ||--|| PAGAMENTO : possui
+    PEDIDOS ||--|| ENTREGA : possui
+
+    ENDERECO ||--o{ ENTREGA : destino
+
+---
+
 ## 🔧 Funcionalidades implementadas
 
 ### 📌 CRUD (Create, Read, Update)
