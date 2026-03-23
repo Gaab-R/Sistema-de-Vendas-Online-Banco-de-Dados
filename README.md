@@ -1,69 +1,24 @@
-# 🛒 Sistema de Vendas Online – Banco de Dados (BitVerso_BD)
+# Sistema de Vendas Online – Banco de Dados
 
-Projeto de modelagem e implementação de um banco de dados relacional para um sistema de vendas online (e-commerce), desenvolvido com foco em organização, integridade, desempenho e escalabilidade.
+Projeto de modelagem e implementação de um banco de dados relacional para um sistema de e-commerce.
 
-O projeto simula o funcionamento da empresa fictícia *BitVerso*, permitindo o gerenciamento completo de clientes, produtos, pedidos, pagamentos e entregas.
-
----
-
-## 🎯 Objetivo
-
-Desenvolver um banco de dados robusto capaz de:
-
-- Gerenciar operações de um e-commerce  
-- Garantir integridade e consistência dos dados  
-- Aplicar boas práticas de modelagem e normalização  
-- Otimizar consultas e organização das informações  
+A ideia foi simular o funcionamento de uma loja online completa, organizando clientes, produtos, pedidos, pagamentos e entregas com foco em estrutura e desempenho.
 
 ---
 
-## ⚙️ Visão geral do funcionamento
+## Estrutura
 
-O sistema foi estruturado com base no fluxo real de um e-commerce:
+O banco foi dividido nas principais entidades de um e-commerce:
 
-### 👤 Clientes e Endereços
-- Armazenamento de dados pessoais  
-- Relacionamento com endereço (FK)  
-
-### 🛍️ Produtos e Categorias
-- Organização dos produtos por categorias  
-- Controle de estoque e preços  
-
-### 📦 Pedidos e ItensPedidos
-- Um pedido pode conter vários produtos  
-- Resolvido com tabela intermediária (N:N)  
-
-### 💳 Pagamentos
-- Controle financeiro dos pedidos  
-- Registro de status e tipo de pagamento  
-
-### 🚚 Entrega
-- Gerenciamento de envio e status logístico  
-
----
-
-## 🗄️ Estrutura do Banco de Dados
-
-Tabelas implementadas:
-
-- Endereco  
-- Clientes  
-- Categorias  
-- Produtos  
-- Pedidos  
-- ItensPedidos  
+- Clientes e Endereços  
+- Produtos e Categorias  
+- Pedidos e Itens de Pedido  
 - Pagamento  
 - Entrega  
 
-O banco segue normalização até a *3ª Forma Normal (3FN)*, garantindo:
-
-- Eliminação de redundâncias  
-- Integridade referencial  
-- Organização lógica eficiente  
-
 ---
 
-## 📊 Diagrama Entidade-Relacionamento (DER)
+## Diagrama (DER)
 
 ```mermaid
 erDiagram
@@ -152,90 +107,92 @@ erDiagram
 ```
 ---
 
-## 🔧 Funcionalidades implementadas
+Tabelas principais:
 
-### 📌 CRUD (Create, Read, Update)
+- Endereco  
+- Clientes  
+- Categorias  
+- Produtos  
+- Pedidos  
+- ItensPedidos  
+- Pagamento  
+- Entrega  
 
-- *Create:* Inserção com INSERT INTO  
-- *Read:* Consultas com SELECT + Views  
-- *Update:* Atualização com UPDATE  
-- *Delete:* Estrutura prevista (não aplicada no projeto)  
-
----
-
-## 📊 Views criadas
-
-Consultas otimizadas para análise de dados:
-
-- *vw_PedidoDetalhado*  
-  Exibe pedidos com cliente, produtos e subtotal  
-
-- *vw_TotalGastoCliente*  
-  Soma total gasto por cliente  
-
-- *vw_BaixoEstoque*  
-  Lista produtos com estoque abaixo de 5 unidades  
-
-- *vw_PagamentoPendente*  
-  Mostra pagamentos ainda não concluídos  
+O modelo segue até a 3ª forma normal, evitando redundância e mantendo consistência.
 
 ---
 
-## ⚡ Recursos avançados (Banco de Dados II)
+## Como funciona
 
-### 🔁 Functions e Stored Procedures
-
-- calcular_total_pedido → cálculo automático do total  
-- criar_pedido → encapsula criação de pedidos  
-- relatorio_pedidos_cliente → relatório completo  
-- atualizar_estoque → controle de estoque  
-- aplicar_desconto_produtos_caros → regra de negócio  
-
-✔️ Redução de duplicação de lógica  
-✔️ Melhor organização e desempenho  
+- Um cliente faz pedidos  
+- Cada pedido pode ter vários produtos  
+- Os itens do pedido fazem a ligação entre pedidos e produtos  
+- Cada pedido possui pagamento e entrega  
+- Produtos são organizados por categorias  
 
 ---
 
-### ⚙️ Atomicidade e Consistência
+## Funcionalidades
 
-- Uso de transações (BEGIN, COMMIT, ROLLBACK)  
-- Garantia de integridade dos dados  
-- Controle de concorrência com *READ COMMITTED*  
+- Inserção, consulta e atualização de dados  
+- Consultas com JOIN entre múltiplas tabelas  
+- Estrutura preparada para operações completas de CRUD  
 
 ---
 
-### 🚀 Otimização de consultas
+## Views
 
-- Redução de cálculos repetitivos  
-- Uso de joins otimizados  
+Foram criadas views para facilitar consultas e análise:
+
+- vw_PedidoDetalhado → pedidos com produtos e valores  
+- vw_TotalGastoCliente → total gasto por cliente  
+- vw_BaixoEstoque → produtos com pouco estoque  
+- vw_PagamentoPendente → pagamentos não finalizados  
+
+---
+
+## Procedures e funções
+
+- calcular_total_pedido  
+- criar_pedido  
+- relatorio_pedidos_cliente  
+- atualizar_estoque  
+- aplicar_desconto_produtos_caros  
+
+Usadas para centralizar lógica e evitar repetição de código.
+
+---
+
+## Transações e integridade
+
+- Uso de BEGIN, COMMIT e ROLLBACK  
+- Controle de consistência dos dados  
+- Isolamento com READ COMMITTED  
+
+---
+
+## Otimização
+
+- Queries organizadas com joins eficientes  
+- Uso de views para reduzir repetição  
 - Estrutura pensada para performance  
 
 ---
 
-### 🧩 Fragmentação
+## Controle de acesso
 
-- *Vertical:* separação de atributos (Produtos, Pedidos)  
-- *Horizontal:* separação por instâncias (Clientes, Endereço)  
-
-✔️ Melhor organização e desempenho  
-
----
-
-### 🔐 Controle de acesso
-
-Definição de papéis:
+Papéis definidos para diferentes áreas:
 
 - Administração  
 - Estoque  
 - Vendas  
 - Financeiro  
 - Logística  
-- Analytics  
 - Atendimento  
 
 ---
 
-## 🧪 Exemplos de consultas
+## Exemplo de consulta
 
 ```sql
 SELECT *
